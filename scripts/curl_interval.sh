@@ -18,7 +18,7 @@ Examples:
 EOF
 }
 
-# Check if no arguments provided
+# check if no arguments provided
 if [[ $# -eq 0 ]]; then
   show_help
   exit 0
@@ -28,7 +28,7 @@ URL="$1"
 INTERVAL_MS="$2"
 DURATION_MS="${3:-0}"
 
-# Error handling for missing required args
+# error handling for missing required args
 if [[ -z "$URL" ]]; then
   echo "Error: URL is required" >&2
   show_help
@@ -41,7 +41,7 @@ if [[ -z "$INTERVAL_MS" ]]; then
   exit 1
 fi
 
-# Validate that interval and duration are numbers
+# validate that interval and duration are numbers
 if ! [[ "$INTERVAL_MS" =~ ^[0-9]+$ ]]; then
   echo "Error: Interval must be a positive integer (milliseconds)" >&2
   exit 1
