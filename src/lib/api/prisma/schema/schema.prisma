@@ -24,7 +24,7 @@ model User {
 model Url {
   id          String   @id @default(cuid())
   shortId     String   @unique
-  originalUrl String   @unique
+  originalUrl String
   // relations
   creator     User?    @relation(fields: [creatorId], references: [id])
   creatorId   String?
