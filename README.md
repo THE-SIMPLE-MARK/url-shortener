@@ -1,6 +1,7 @@
-# My T3 Boilerplate
+# URL Shortener
 
-This is is a template repository for my new projects. It is basically a copy of the outputs of [Create T3 App](https://create.t3.gg/) with my own file structure, naming conventions, etc.
+This is a basic URL shortener with performance optimizations intentionally
+omitted. This is used for testing zero-downtime database migrations.
 
 ## Running & Building
 
@@ -13,10 +14,13 @@ This is is a template repository for my new projects. It is basically a copy of 
 ### Database setup
 
 1. Initialize the database
+
 ```bash
 pnpm db:dev:init # creates a postgres docker container for the db
 ```
+
 2. Push schema to the (empty) database
+
 ```bash
 pnpm db:push # pushes the schema to the db
 ```
@@ -26,6 +30,7 @@ pnpm db:push # pushes the schema to the db
 Follow the database setup instructions above.
 
 1. Start the development server
+
 ```bash
 pnpm dev # starts the dev server for the website (builds pages as needed => slow)
 ```
@@ -35,10 +40,13 @@ pnpm dev # starts the dev server for the website (builds pages as needed => slow
 Follow the database setup instructions above.
 
 1. Build the production server
+
 ```bash
 pnpm build # builds the website in an optimized manner for prod
 ```
+
 2. Start the production server
+
 ```bash
 pnpm start # starts the built bundle
 ```
