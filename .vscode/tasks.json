@@ -1,0 +1,29 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"command": "pnpm lint",
+			"group": "build",
+			"presentation": {
+				"echo": false,
+				"reveal": "silent",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			},
+			"problemMatcher": ["$eslint-stylish"],
+			"label": "ESLint: Lint whole folder",
+			"runOptions": {
+				"runOn": "folderOpen"
+			},
+			"options": {
+				"shell": {
+					"executable": "${env:SHELL}",
+					"args": ["-l", "-i", "-c"]
+				}
+			}
+		}
+	]
+}

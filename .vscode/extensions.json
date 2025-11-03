@@ -1,0 +1,10 @@
+{
+	"recommendations": [
+		"esbenp.prettier-vscode",
+		"dbaeumer.vscode-eslint",
+		"EdwinHuiSH.better-comments-next",
+		"mikestead.dotenv",
+		"prisma.prisma",
+		"vitest.explorer"
+	]
+}
