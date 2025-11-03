@@ -4,9 +4,8 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"dev": "NODE_OPTIONS=\"--no-deprecation\" next dev --turbopack --experimental-https --port 3000",
+		"dev": "next dev --turbopack --experimental-https --port 3000",
 		"start": "next start",
-		"start:dev": "NODE_OPTIONS=\"--no-deprecation\" SKIP_ENV_VALIDATION=true VERCEL_URL=localhost:3000 next start",
 		"lint": "TIMING=1 eslint . --ext .js,.jsx,.ts,.tsx",
 		"format": "prettier --write \"**/*.{js,ts,tsx,md,json}\"",
 		"db:gen": "prisma generate --no-hints",
