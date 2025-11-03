@@ -7,9 +7,9 @@ const prisma = new PrismaClient()
 async function main() {
 	console.log("Clearing existing data...")
 
-	const NUM_USERS = 1_000
+	const NUM_USERS = 10_000
 	const URLS_PER_USER = 25
-	const BATCH_SIZE = 100
+	const BATCH_SIZE = 500
 
 	const totalBatches = Math.ceil(NUM_USERS / BATCH_SIZE)
 
