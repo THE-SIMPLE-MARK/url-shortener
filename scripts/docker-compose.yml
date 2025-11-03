@@ -1,11 +1,11 @@
-name: my-t3-boilerplate-dev
+name: url-shortener-dev
 services:
   postgres:
-    container_name: my-t3-boilerplate-postgres
+    container_name: url-shortener-postgres
     image: postgres:17
     restart: always
     environment:
-      POSTGRES_DB: my-t3-boilerplate
+      POSTGRES_DB: url-shortener
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
     ports:
