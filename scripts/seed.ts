@@ -20,10 +20,15 @@ async function main() {
 	console.log("=== SEEDING START ===")
 	const start = performance.now()
 
+	console.log(`Generating ${NUM_USERS} unique names...`)
+	const uniqueNames = faker.helpers.uniqueArray(
+		() => faker.person.fullName(),
+		NUM_USERS
+	)
+
 	console.log(
 		`Creating ${NUM_USERS} users with ${URLS_PER_USER} URLs each in ${totalBatches} batches...\n`
 	)
-
 	for (let i = 0; i < NUM_USERS; i += BATCH_SIZE) {
 		const currentBatchNum = i / BATCH_SIZE + 1
 
@@ -32,6 +37,8 @@ async function main() {
 
 		const createOperations = []
 		for (let j = 0; j < BATCH_SIZE && i + j < NUM_USERS; j++) {
+			const name = uniqueNames[i + j]!
+
 			const urlsData = []
 			for (let k = 0; k < URLS_PER_USER; k++) {
 				urlsData.push({
@@ -43,7 +50,7 @@ async function main() {
 			createOperations.push(
 				prisma.user.create({
 					data: {
-						name: faker.person.fullName(),
+						name: name,
 						urls: {
 							create: urlsData,
 						},
