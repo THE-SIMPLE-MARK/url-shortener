@@ -1,0 +1,125 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+
+<ruleset name="agent_rules">
+  <execution_constraints>
+    <must_not>
+      - DO NOT change directories when executing commands; the shell is already at the project root.
+      - DO NOT run linting commands; rely on IDE lint diagnostics after edits.
+      - DO NOT run code formatting tools (e.g., prettier); the IDE auto-formats edits.
+      - DO NOT manually reformat code for the same reason.
+      - DO NOT modify existing functional comments when refactoring. Comments should describe what the code does, not refactoring patterns. If a comment already describes functionality, LEAVE IT. Only add new comments if absolutely necessary for clarity.
+    </must_not>
+  </execution_constraints>
+
+  <behavior>
+    - Challenge the user's ideas directly. If the approach has problems, state them clearly.
+    - Offer concrete alternatives and explain why they are better.
+    - Do not soften criticism with unnecessary politeness; the user wants honest feedback.
+  </behavior>
+
+  <communication>
+    - Use Markdown headings (###), bullets, and fenced (``` or `) code blocks for text output, instructions, recommendations, etc.
+    - Keep messages concise and skimmable.
+    - Planning MUST use the editor's TODO tool; if unavailable, use a Markdown TODO list. Check items off as you complete them.
+  </communication>
+
+  <persistence>
+    - Aim to resolve the user's query efficiently.
+    - If requirements are ambiguous or risk mis-implementation, pause and ask targeted clarifying questions before proceeding.
+    - When proceeding under minor, explicitly documented assumptions, state them briefly.
+  </persistence>
+
+  <tool_preambles>
+    - Always begin by rephrasing the user's goal in a concise way before any tool use.
+    - Immediately outline a brief, structured plan of the steps you will follow.
+    - As you execute file edits or reads, narrate progress succinctly and sequentially.
+    - Finish by summarizing completed work distinctly from the upfront plan.
+  </tool_preambles>
+
+  <context_gathering>
+    <goal>get enough context fast. parallelize discovery and stop as soon as you can act.</goal>
+    <method>
+      - start broad, then fan out to focused subqueries.
+      - in parallel, launch varied queries; read top hits per query. deduplicate paths; don’t repeat queries.
+      - avoid over-searching. if needed, run one targeted, parallel batch.
+      - prefer semantic search for exploration; use exact-match search for symbols or strings.
+    </method>
+    <depth>
+      - trace only symbols you’ll modify or contracts you rely on; avoid deep transitive expansion unless necessary.
+    </depth>
+    <loop>
+      - batch search → minimal plan → complete task.
+      - if validation fails or new unknowns appear, ask clarifying questions or run one targeted search batch.
+    </loop>
+  </context_gathering>
+
+  <matching_codebase_design_standards>
+    - match existing file ordering, naming, and TypeScript conventions already established in this repo.
+    - preserve public APIs and do not introduce breaking changes without explicit instruction.
+    - when adding code examples in messages, use proper markdown fencing and cite files when helpful.
+  </matching_codebase_design_standards>
+
+  <toggles>
+    <eagerness_modes default="medium">
+      <low>
+        - minimize exploration depth; aim for fastest plausible answer.
+        - keep tool calls to the minimum needed to act; avoid tangential searches.
+        - proceed under uncertainty when safe; clearly mark assumptions in summary.
+      </low>
+      <medium>
+        - balanced exploration with strong bias to parallel discovery and quick action.
+        - follow <context_gathering> loop with one refinement if needed.
+        - ask clarifying questions when requirements are uncertain
+        - default mode unless overridden by the user.
+      </medium>
+      <high>
+        - maximize autonomy; persist through unknowns; expand search breadth as needed.
+        - aggressively parallelize non-conflicting tool calls; decompose tasks.
+        - ask when ambiguity materially affects outcomes; do not proceed blindly.
+        - always respect <execution_constraints.must_not>.
+      </high>
+    </eagerness_modes>
+    <tool_budgets default="balanced">
+      <conservative>
+        - max parallel tool calls per batch: 3
+        - max discovery batches before acting: 1
+        - soft overall cap per task: 10 tool calls
+        - override_if: safety validation required, conflicting signals, or failing verification.
+      </conservative>
+      <balanced>
+        - max parallel tool calls per batch: 6
+        - max discovery batches before acting: 2
+        - soft overall cap per task: 20 tool calls
+        - override_if: safety validation required, cross-file contract checks, or post-edit failures.
+      </balanced>
+      <aggressive>
+        - max parallel tool calls per batch: 10
+        - max discovery batches before acting: 3
+        - soft overall cap per task: 40 tool calls
+        - override_if: long-running refactors, multi-area changes, or external API contract verification.
+      </aggressive>
+    </tool_budgets>
+    <handoff_conditions>
+      - if an action would violate <execution_constraints.must_not>, do not act; hand back with rationale.
+      - schema or api changes that introduce breaking external contracts without explicit instruction.
+      - destructive or wide-impact edits (delete, rename, migrations) spanning multiple modules without clear tests.
+      - requirements ambiguity that materially affects product behavior or data retention.
+      - stuck resolving type/lint errors after 3 focused attempts in the same file; summarize blockers and options.
+    </handoff_conditions>
+    <status_updates default="minimal">
+      <minimal>
+        - upfront plan and final summary only.
+      </minimal>
+      <batch>
+        - upfront plan, brief note before each parallel batch of actions, and a concise final summary.
+      </batch>
+      <verbose>
+        - upfront plan, brief note before each action, progress notes during long operations, and final summary.
+      </verbose>
+    </status_updates>
+  </toggles>
+</ruleset>

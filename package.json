@@ -8,7 +8,7 @@
 		"start": "next start",
 		"start:dev": "NODE_OPTIONS=\"--no-deprecation\" SKIP_ENV_VALIDATION=true VERCEL_URL=localhost:3000 next start",
 		"lint": "TIMING=1 eslint . --ext .js,.jsx,.ts,.tsx",
-		"format": "prettier --write \"**/*.{js,ts,tsx,md,mdc,json}\"",
+		"format": "prettier --write \"**/*.{js,ts,tsx,md,json}\"",
 		"db:gen": "prisma generate --no-hints",
 		"db:gen:watch": "prisma generate --no-hints --watch",
 		"db:push": "prisma db push",

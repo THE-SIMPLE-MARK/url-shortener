@@ -1,0 +1,56 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+
+<ruleset name="general_code_structure">
+  <maintenance>
+    - update this if the user requested changes to content which this file governs.
+  </maintenance>
+
+  <style_and_conventions>
+    - Write concise, technical TypeScript code with accurate examples.
+    - Use functional and declarative programming patterns; avoid classes.
+    - Prefer iteration and modularization over code duplication.
+    - Use descriptive variable names with auxiliary verbs (e.g., `isLoading`, `hasError`).
+    - do not start comments with uppercase letters (except JSDoc). start regular comments with lowercase.
+    - do not comment obvious things; comment larger code blocks to explain the "why".
+    - avoid unnecessary curly braces in conditionals for single statements.
+    - use guard clauses to prevent indentation and complexity.
+  </style_and_conventions>
+
+  <code_structure>
+    - Structure all code files in this order:
+      - Exported component (or main content)
+      - Subcomponents
+      - Helpers
+      - Static content
+      - Types
+    - Do NOT default export any function or component.
+      - Exception: Next.js app router files that require a default export: `app/**/page.tsx`, `app/**/layout.tsx`, and route handlers as applicable by framework conventions.
+  </code_structure>
+
+  <naming_conventions>
+    - Use camelCase for directories (e.g., `components/authWizard`).
+    - Use camelCase for variables, functions, and classes.
+    - Use SCREAMING_SNAKE_CASE for top-level constants with primitive values.
+  </naming_conventions>
+
+  <react_conventions>
+    - Use functional components with TypeScript interfaces.
+    - Use declarative JSX.
+  </react_conventions>
+
+  <typescript_conventions>
+    - Do NOT use `any`. Prefer precise types; if all else fails, use `unknown`.
+    - Prefer `interface` over `type`.
+    - Use the `function` keyword for pure functions.
+    - Prefer the nullish coalescing operator (`??`) over logical OR (`||`).
+  </typescript_conventions>
+
+  <matching_codebase_design_standards>
+    - match existing formatting and file ordering; do not reformat unrelated code.
+    - preserve type safety and avoid unsafe casts.
+  </matching_codebase_design_standards>
+</ruleset>
