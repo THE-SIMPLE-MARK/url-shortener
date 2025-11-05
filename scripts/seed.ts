@@ -5,8 +5,8 @@ import { faker } from "@faker-js/faker"
 const prisma = new PrismaClient()
 
 async function main() {
-	const NUM_USERS = 30_000
-	const URLS_PER_USER = 50
+	const NUM_USERS = 45_000
+	const URLS_PER_USER = 60
 	const BATCH_SIZE = 5000
 
 	console.log("=== SEEDING START ===")
