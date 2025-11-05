@@ -13,7 +13,7 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
+  id        Int      @id @default(autoincrement())
   urls      Url[]
   name      String   @unique
   // metadata
@@ -22,12 +22,12 @@ model User {
 }
 
 model Url {
-  id          String   @id @default(cuid())
+  id          Int      @id @default(autoincrement())
   shortId     String   @unique
   originalUrl String
   // relations
   creator     User?    @relation(fields: [creatorId], references: [id])
-  creatorId   String?
+  creatorId   Int?
   // metadata
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
