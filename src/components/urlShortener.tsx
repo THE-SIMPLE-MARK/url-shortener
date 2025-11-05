@@ -11,7 +11,7 @@ export function UrlShortener() {
 	const [userName, setUserName] = useState("")
 	const [urlToShorten, setUrlToShorten] = useState("")
 	const [searchedUser, setSearchedUser] = useState<string>("")
-	const [deletingUrlId, setDeletingUrlId] = useState<string | null>(null)
+	const [deletingUrlId, setDeletingUrlId] = useState<number | null>(null)
 
 	const { data: user, isLoading: isLoadingUser } = useQuery({
 		...api.url.getUserByName.queryOptions({ name: searchedUser }),
@@ -19,7 +19,7 @@ export function UrlShortener() {
 	})
 
 	const { data: urls = [] } = useQuery({
-		...api.url.getUserUrls.queryOptions({ userId: user?.id ?? "" }),
+		...api.url.getUserUrls.queryOptions({ userName: user?.name ?? "" }),
 		enabled: !!user?.id,
 	})
 
@@ -53,7 +53,7 @@ export function UrlShortener() {
 		})
 	)
 
-	function handleDeleteUrl(urlId: string) {
+	function handleDeleteUrl(urlId: number) {
 		setDeletingUrlId(urlId)
 		deleteUrl.mutate({ urlId })
 	}

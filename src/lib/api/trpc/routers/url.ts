@@ -30,7 +30,7 @@ export const urlRouter = createTRPCRouter({
 		.input(
 			z.object({
 				originalUrl: z.string().url(),
-				creatorId: z.string(),
+				creatorId: z.int(),
 			})
 		)
 		.mutation(async ({ input }) => {
@@ -57,16 +57,16 @@ export const urlRouter = createTRPCRouter({
 		}),
 
 	getUserUrls: publicProcedure
-		.input(z.object({ userId: z.string() }))
+		.input(z.object({ userName: z.string() }))
 		.query(async ({ input }) => {
 			return prisma.url.findMany({
-				where: { creatorId: input.userId },
+				where: { creator: { name: input.userName } },
 				orderBy: { createdAt: "desc" },
 			})
 		}),
 
 	deleteUrl: publicProcedure
-		.input(z.object({ urlId: z.string() }))
+		.input(z.object({ urlId: z.int() }))
 		.mutation(async ({ input }) => {
 			return prisma.url.delete({
 				where: { id: input.urlId },
